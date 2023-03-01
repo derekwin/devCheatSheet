@@ -1,0 +1,24 @@
+#cloud-config
+ssh_pwauth: true
+hostname: vm1
+timezone: Asia/Hong_Kong
+groups:
+  - ubuntu
+
+# Add users to the system. Users are added after groups are added.
+users:
+  - name: ubuntu
+    primary_group: ubuntu
+    lock_passwd: false
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    passwd: $1$uRv89MKW$BJZ24cBtJfs./d2VnM2D3.
+    shell: /bin/bash
+
+write_files:
+ - content: |
+     # written by cloud-init
+     * soft nofile 65536
+     * hard nofile 65536
+   path: /etc/security/limits.conf
+   permissions: '0644'
+   owner: root:root
